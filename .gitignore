@@ -1,0 +1,23 @@
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
+
+# Python-generated files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local application data and generated output
+courses.db
+results/*.json
+
+# Local datasets and OS metadata
+*.xlsx
+!Database.xlsx
+.DS_Store
+
+# JavaScript dependencies and build output
+node_modules/
+Course_Recommendation_React/node_modules/
+Course_Recommendation_React/dist/

@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@re-dev/react-truncate": "^0.5.2",
+    "react-text-truncate": "^0.19.0"
+  }
+}

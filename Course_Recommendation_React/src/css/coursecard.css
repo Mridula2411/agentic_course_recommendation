@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.courseCard {
+  /* border: 2px solid black; */
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 30px;
+  background-color: #ffffff;
+  /* border: 3px solid #4e4e4e; */
+
+  box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.4);;
+}
+
+.courseCardHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2vw 0 2vw;
+    color: #808080;
+}
+
+.montserrat-p-header {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500; /*100-900*/
+}
+
+.montserrat-p {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500; /*100-900*/
+  color: #213547;
+}
+
+.courseTitle {
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold; /*100-900*/
+    color: #4e4e4e;
+    text-align: start;
+    padding: 0 2vw 0 2vw;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.courseDescription {
+    color: #4e4e4e;
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    text-align: start;
+}
+
+
+.iconGrandParent {
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1vw;
+    margin-left: 2vw;   
+    /* margin-bottom: 3vh; */
+
+    /* border: 2px solid red; */
+}
+
+.iconParent {
+    display: flex;
+    flex-direction: row;
+    gap: 0.3vw;
+}
+
+
+.courseLink {
+    color: #2f4858;
+    text-decoration: underline;
+}
+
+.courseLink:hover {
+    color: #5d8dac;
+}
+
+
+.flexParent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* border: 2px solid red; */
+    margin-left: 2vw;
+    margin-right: 2vw;
+    gap: 1vw;
+}
+
+
+
+
+.contentParent {
+display: flex;
+flex-direction: column;
+/* border: 2px solid red; */
+}
