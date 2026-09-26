@@ -53,10 +53,26 @@
 
 
 .searchBarParent {
-  margin-bottom: 80px;
+  margin-bottom: 16px;
 }
 
 .resultsP {
   text-align: start;
   font-style: italic;
+}
+@media (max-width: 800px) {
+  .searchBarParent {
+    display: flex;
+  }
+
+  .searchbar {
+    flex: 1;
+    min-width: 0;
+    width: auto;
+  }
+
+  .button {
+    height: auto;
+    padding: 0 16px;
+  }
 }

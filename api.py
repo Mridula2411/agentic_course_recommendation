@@ -1,6 +1,9 @@
+from collections import OrderedDict
+from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 from data_setup import setup_database
+from orchestrator import Orchestrator, Session
 from nlp_engine import extract_intent
 from query_engine import build_safe_query, execute_query
 import os
@@ -53,3 +56,31 @@ def recommend_course(request: CourseRequest):
         json.dump(output_data, f, indent=4, ensure_ascii=False)
     print(f"[FastAPI] Results written to {filepath}")
     return output_data
+
+
+MAX_SESSIONS = 200
+sessions = OrderedDict()
+orchestrator = None
+
+
+class ChatRequest(BaseModel):
+    message: str
+    session_id: Optional[str] = None
+
+
+@app.post("/chat")
+def chat(request: ChatRequest):
+    global orchestrator
+    if orchestrator is None:
+        orchestrator = Orchestrator()
+    session = sessions.get(request.session_id) or Session()
+    sessions[session.id] = session
+    sessions.move_to_end(session.id)
+    while len(sessions) > MAX_SESSIONS:
+        sessions.popitem(last=False)
+    try:
+        result = orchestrator.handle(session, request.message)
+    except Exception as e:
+        print(f"[chat] {type(e).__name__}: {e}")
+        return {"session_id": session.id, "error": "Something went wrong. Please try again."}
+    return {"session_id": session.id, **result}

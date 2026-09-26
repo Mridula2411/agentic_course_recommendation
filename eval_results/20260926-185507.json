@@ -1,0 +1,996 @@
+{
+  "meta": {
+    "started": "2026-09-26 18:51",
+    "model": "gemini-2.5-flash",
+    "judge_model": "openai:gpt-6-sol",
+    "repeat": 1
+  },
+  "summary": {
+    "turns": 22,
+    "errors": 0,
+    "routing_accuracy": 1,
+    "constraint_pass_rate": 0.93,
+    "courses_violating_constraints": 0.01,
+    "sql_faithfulness": 4.2,
+    "precision_at_10": 0.84,
+    "summary_honest": 0.93,
+    "advice_groundedness": 4.5,
+    "advice_answers_question": 5,
+    "advice_completeness": 4.5,
+    "advice_clarity": 5,
+    "demo_labels_ok": 0.75,
+    "seconds_per_turn": 4.31,
+    "judge_errors": 0,
+    "must_include_recall": 1.0,
+    "result_consistency": null
+  },
+  "runs": [
+    {
+      "case": "ml-refine-advise",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "machine learning courses",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 4.8,
+          "reply": "Finds courses related to machine learning or artificial intelligence, prioritizing matches in the course name. (47 courses)",
+          "sql": "SELECT c.course_code FROM courses c WHERE c.status = 'ok' AND (c.course_name LIKE '%machine learning%' OR c.description LIKE '%machine learning%' OR c.learning_outcomes LIKE '%machine learning%' OR c.course_name LIKE '%artificial intelligence%' OR c.description LIKE '%artificial intelligence%' OR c.learning_outcomes LIKE '%artificial intelligence%') ORDER BY CASE WHEN c.course_name LIKE '%machine learning%' THEN 0 WHEN c.course_name LIKE '%artificial intelligence%' THEN 1 WHEN c.description LIKE '%machine learning%' THEN 2 WHEN c.description LIKE '%artificial intelligence%' THEN 3 WHEN c.learning_outcomes LIKE '%machine learning%' THEN 4 WHEN c.learning_outcomes LIKE '%artificial intelligence%' THEN 5 ELSE 6 END",
+          "total": 47,
+          "result_codes": [
+            "DD2301",
+            "DD2421",
+            "DD2570",
+            "DD2434",
+            "EG2140",
+            "EL2810",
+            "EP236U",
+            "EP234U",
+            "EQ2341",
+            "EQ2415",
+            "ID2223",
+            "IK2221",
+            "DM2585",
+            "DD2380",
+            "DD2438",
+            "EP2900",
+            "EP271V",
+            "ID2209",
+            "ID2214",
+            "DT2112",
+            "DM2583",
+            "DT2470",
+            "DD2363",
+            "DD2430",
+            "DD2420",
+            "DD2601",
+            "DD2447",
+            "DD2368",
+            "DD2367",
+            "EP272V",
+            "EQ2310",
+            "ID2222",
+            "ID2221",
+            "ID2211",
+            "IK2220",
+            "IK2227",
+            "IL2230",
+            "DM2730",
+            "DM2586",
+            "DM2588",
+            "ID2012",
+            "DD2360",
+            "DD2417",
+            "DD2603",
+            "EP2700",
+            "DM2731",
+            "DD2600"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 2,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 5,
+            "precision_at_10": 1.0,
+            "summary_honest": true,
+            "issues": []
+          }
+        },
+        {
+          "message": "only the ones in P2",
+          "expected_route": [
+            "refine"
+          ],
+          "route": "refine",
+          "route_ok": true,
+          "seconds": 3.9,
+          "reply": "This query finds courses related to machine learning or artificial intelligence that are offered in study period P2. (14 courses)",
+          "sql": "SELECT c.course_code FROM courses c WHERE c.status = 'ok' AND (c.course_name LIKE '%machine learning%' OR c.description LIKE '%machine learning%' OR c.learning_outcomes LIKE '%machine learning%' OR c.course_name LIKE '%artificial intelligence%' OR c.description LIKE '%artificial intelligence%' OR c.learning_outcomes LIKE '%artificial intelligence%') AND c.periods LIKE '%P2%' ORDER BY CASE WHEN c.course_name LIKE '%machine learning%' THEN 0 WHEN c.course_name LIKE '%artificial intelligence%' THEN 1 WHEN c.description LIKE '%machine learning%' THEN 2 WHEN c.description LIKE '%artificial intelligence%' THEN 3 WHEN c.learning_outcomes LIKE '%machine learning%' THEN 4 WHEN c.learning_outcomes LIKE '%artificial intelligence%' THEN 5 ELSE 6 END",
+          "total": 14,
+          "result_codes": [
+            "DD2301",
+            "DD2570",
+            "DD2434",
+            "EG2140",
+            "ID2223",
+            "ID2214",
+            "DD2430",
+            "DD2368",
+            "EP272V",
+            "EQ2310",
+            "ID2222",
+            "DM2730",
+            "DD2360",
+            "DD2603"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 0,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 5,
+            "precision_at_10": 0.9,
+            "summary_honest": true,
+            "issues": [
+              "EQ2310 is primarily a digital communications course; its relevance to machine learning or AI is not evident from the listed details."
+            ]
+          }
+        },
+        {
+          "message": "which of these is the easiest?",
+          "expected_route": [
+            "advise"
+          ],
+          "route": "advise",
+          "route_ok": true,
+          "seconds": 7.5,
+          "reply": "Based on the difficulty ratings, the easiest courses in P2 are **DM2730 Technology Enhanced Learning**, **DD2430 Project Course in Data Science**, and **DD2368 Quantum Neural Networks**, all rated with a difficulty of 2.0.  \n\n**DM2730 Technology Enhanced Learning** stands out with a perfect 1.0 pass rate and a student review (survey data) noting it's \"very open and interesting\" for building projects.  \n\n**DD2430 Project Course in Data Science** has a high pass rate of 0.935 and is graded P/F (Pass/Fail) for its project report and oral evaluation, which might contribute to its lower difficulty.  \n\n**DD2368 Quantum Neural Networks** also has a high pass rate of 0.916, and a student review (demo data) describes it as \"fascinating and well-delivered.\"",
+          "highlighted": [
+            "DM2730",
+            "DD2430",
+            "DD2368"
+          ],
+          "judge": {
+            "groundedness": 4,
+            "answers_question": 5,
+            "completeness": 4,
+            "clarity": 5,
+            "demo_labels_ok": false,
+            "issues": [
+              "The difficulty scores for DD2430 and DD2368 are used without identifying them as demo data; their ratings_source is synthetic.",
+              "The answer omits prerequisites that could affect which course is easiest for this student.",
+              "The suggestion that P/F grading contributes to DD2430’s lower difficulty is speculative."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case": "sustainability-pass-fail",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "pass/fail courses about sustainability",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 4.3,
+          "reply": "Finds pass/fail courses about sustainability, ordered by relevance to the topic. (17 courses)",
+          "sql": "SELECT c.course_code FROM courses c WHERE c.grading_scale = 'P/F' AND c.status = 'ok' AND (c.course_name LIKE '%sustainability%' OR c.description LIKE '%sustainability%' OR c.learning_outcomes LIKE '%sustainability%') ORDER BY CASE WHEN c.course_name LIKE '%sustainability%' THEN 0 WHEN c.description LIKE '%sustainability%' THEN 1 WHEN c.learning_outcomes LIKE '%sustainability%' THEN 2 ELSE 3 END",
+          "total": 17,
+          "result_codes": [
+            "DM2713",
+            "DM2586",
+            "DM2630",
+            "DM2800",
+            "DA2215",
+            "DD2302",
+            "DD2303",
+            "DM284V",
+            "DM2803",
+            "DM2801",
+            "IL224V",
+            "IL2233",
+            "SA2003",
+            "DM2588",
+            "II2210",
+            "IL2229",
+            "IL2232"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 2,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 4,
+            "precision_at_10": 0.4,
+            "summary_honest": false,
+            "issues": [
+              "The search matches only the literal word 'sustainability', potentially missing courses described using 'sustainable' or related terms.",
+              "Several results appear to mention sustainability only incidentally rather than being about it.",
+              "The summary calls the ordering relevance-based, but SQL orders only by which field contains the keyword."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case": "projects-no-exam-p1",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "project-based courses with no written exam in period 1",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 3.9,
+          "reply": "Finds project-based courses offered in Period 1 with no written exam. (43 courses)",
+          "sql": "SELECT c.course_code FROM courses c WHERE c.status = 'ok' AND c.periods LIKE '%P1%' AND c.has_written_exam = 0 AND c.examination LIKE '%PRO%'",
+          "total": 43,
+          "result_codes": [
+            "DM2601",
+            "DH2400",
+            "DH2413",
+            "DH2643",
+            "DH2655",
+            "DM2583",
+            "DM2630",
+            "DT2470",
+            "MF2039",
+            "DD2430",
+            "DD2411",
+            "DD2467",
+            "DD2414",
+            "DD2367",
+            "DD2600",
+            "DD2610",
+            "DD2394",
+            "DH2465",
+            "DM2803",
+            "EF2229",
+            "EF2226",
+            "EF2228",
+            "EF2227",
+            "EH2070",
+            "EI2525",
+            "EI2455",
+            "EI2515",
+            "EI2510",
+            "EJ2201",
+            "EK2210",
+            "EN2720",
+            "EP274V",
+            "EP283U",
+            "EQ2445",
+            "EQ2801",
+            "EQ2443",
+            "EQ2444",
+            "IH2662",
+            "IH262V",
+            "II2211",
+            "IK2200",
+            "IL2231",
+            "IL2232"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 0,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 5,
+            "precision_at_10": 1.0,
+            "summary_honest": true,
+            "issues": []
+          }
+        }
+      ]
+    },
+    {
+      "case": "graphics-credits",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "computer graphics or visualization courses, at most 7.5 credits",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 4.7,
+          "reply": "Finds courses related to computer graphics or visualization with at most 7.5 credits. (17 courses)",
+          "sql": "SELECT c.course_code FROM courses c WHERE c.status = 'ok' AND c.credits <= 7.5 AND (c.course_name LIKE '%computer graphics%' OR c.description LIKE '%computer graphics%' OR c.learning_outcomes LIKE '%computer graphics%' OR c.course_name LIKE '%visualization%' OR c.description LIKE '%visualization%' OR c.learning_outcomes LIKE '%visualization%' OR c.course_name LIKE '%visualisation%' OR c.description LIKE '%visualisation%' OR c.learning_outcomes LIKE '%visualisation%') ORDER BY CASE WHEN c.course_name LIKE '%computer graphics%' OR c.course_name LIKE '%visualization%' OR c.course_name LIKE '%visualisation%' THEN 0 WHEN c.description LIKE '%computer graphics%' OR c.description LIKE '%visualization%' OR c.description LIKE '%visualisation%' THEN 1 ELSE 2 END;",
+          "total": 17,
+          "result_codes": [
+            "DD2258",
+            "DH2321",
+            "DH2323",
+            "DD2470",
+            "DD2257",
+            "DD2364",
+            "DH2320",
+            "DH2322",
+            "DH2310",
+            "DH2650",
+            "DH2670",
+            "ID2214",
+            "DM2583",
+            "DM2602",
+            "DM260V",
+            "II2300",
+            "DD2360"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 2,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 5,
+            "precision_at_10": 1.0,
+            "summary_honest": true,
+            "issues": []
+          }
+        },
+        {
+          "message": "sort them by student rating",
+          "expected_route": [
+            "refine"
+          ],
+          "route": "refine",
+          "route_ok": true,
+          "seconds": 5.7,
+          "reply": "Finds courses related to computer graphics or visualization with at most 7.5 credits, sorted by relevance to the topic and then by student rating. (17 courses)",
+          "sql": "SELECT c.course_code FROM courses c LEFT JOIN student_ratings r USING (course_code) WHERE c.status = 'ok' AND c.credits <= 7.5 AND (c.course_name LIKE '%computer graphics%' OR c.description LIKE '%computer graphics%' OR c.learning_outcomes LIKE '%computer graphics%' OR c.course_name LIKE '%visualization%' OR c.description LIKE '%visualization%' OR c.learning_outcomes LIKE '%visualization%' OR c.course_name LIKE '%visualisation%' OR c.description LIKE '%visualisation%' OR c.learning_outcomes LIKE '%visualisation%') ORDER BY CASE WHEN c.course_name LIKE '%computer graphics%' OR c.course_name LIKE '%visualization%' OR c.course_name LIKE '%visualisation%' THEN 0 WHEN c.description LIKE '%computer graphics%' OR c.description LIKE '%visualization%' OR c.description LIKE '%visualisation%' THEN 1 ELSE 2 END, r.rating DESC NULLS LAST;",
+          "total": 17,
+          "result_codes": [
+            "DH2321",
+            "DH2323",
+            "DD2470",
+            "DD2257",
+            "DD2364",
+            "DD2258",
+            "DH2322",
+            "DH2320",
+            "DM260V",
+            "II2300",
+            "DH2670",
+            "DM2583",
+            "DH2310",
+            "DH2650",
+            "ID2214",
+            "DM2602",
+            "DD2360"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 0,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 2,
+            "precision_at_10": 0.8,
+            "summary_honest": true,
+            "issues": [
+              "Student rating is only a secondary sort key; the request calls for sorting courses by student rating.",
+              "DM260V and II2300 appear tangential to computer graphics or visualization."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case": "robotics-english",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "robotics courses taught in English",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 4.1,
+          "reply": "Finds robotics courses taught in English, prioritizing those with 'robotics' in their name. (10 courses)",
+          "sql": "SELECT c.course_code FROM courses c WHERE c.language = 'English' AND c.status = 'ok' AND (c.course_name LIKE '%robotics%' OR c.description LIKE '%robotics%' OR c.learning_outcomes LIKE '%robotics%') ORDER BY CASE WHEN c.course_name LIKE '%robotics%' THEN 0 WHEN c.description LIKE '%robotics%' THEN 1 ELSE 2 END",
+          "total": 10,
+          "result_codes": [
+            "DD2413",
+            "DD2419",
+            "DD2411",
+            "DD2414",
+            "DD2410",
+            "DD2600",
+            "DD2603",
+            "EL2620",
+            "EL2220",
+            "EL2221"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 1,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 5,
+            "precision_at_10": 0.7,
+            "summary_honest": true,
+            "issues": [
+              "EL2620 is a general nonlinear control course, not clearly a robotics course.",
+              "EL2220 and EL2221 are general engineering courses; any robotics mention appears incidental."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case": "quantum-then-details",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "quantum computing courses",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 3.6,
+          "reply": "Finds courses related to quantum computing, prioritizing those with 'quantum computing' in the course name, then description, then learning outcomes. (2 courses)",
+          "sql": "SELECT c.course_code FROM courses c WHERE c.status = 'ok' AND (c.course_name LIKE '%quantum computing%' OR c.description LIKE '%quantum computing%' OR c.learning_outcomes LIKE '%quantum computing%') ORDER BY CASE WHEN c.course_name LIKE '%quantum computing%' THEN 0 WHEN c.description LIKE '%quantum computing%' THEN 1 WHEN c.learning_outcomes LIKE '%quantum computing%' THEN 2 ELSE 3 END",
+          "total": 2,
+          "result_codes": [
+            "DD2367",
+            "DD2368"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 1,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 5,
+            "precision_at_10": 1.0,
+            "summary_honest": true,
+            "issues": []
+          }
+        },
+        {
+          "message": "tell me more about the first one",
+          "expected_route": [
+            "advise"
+          ],
+          "route": "advise",
+          "route_ok": true,
+          "seconds": 4.7,
+          "reply": "DD2367, \"Quantum Computing for Computer Scientists\", is a 7.5-credit course offered in Period 1 during Autumn 2026. It covers the fundamentals of quantum computing, including qubits, quantum gates, algorithm primitives like quantum arithmetic and phase estimation, and applications such as quantum search and Shor's algorithm. The examination consists of laboratory work (4.0 cr, P/F) and project work (3.5 cr, A-F). Prerequisites include 7.5 credits in linear algebra (e.g., SF1624) and 6 credits in programming (e.g., DD1337).\n\nStudent reviews (demo data) indicate it's a \"comprehensive and challenging dive into quantum computing, perfectly tailored for computer scientists,\" with a difficulty rating of 4.0 out of 5 and an overall rating of 4.1 out of 5. The pass rate is 70.8% (demo data).",
+          "highlighted": [
+            "DD2367"
+          ],
+          "judge": {
+            "groundedness": 4,
+            "answers_question": 5,
+            "completeness": 4,
+            "clarity": 5,
+            "demo_labels_ok": true,
+            "issues": [
+              "The course data gives ratings of 4.0 and 4.1 but does not specify that they are out of 5.",
+              "The answer omits that the course is taught in English and includes quantum machine learning."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case": "security-p1-or-p2",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "cybersecurity courses in P1 or P2",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 4.1,
+          "reply": "Finds cybersecurity courses offered in P1 or P2, ordered by relevance to 'cybersecurity' in the course name, description, or learning outcomes. (12 courses)",
+          "sql": "\nSELECT c.course_code FROM courses c\nWHERE c.status = 'ok'\n  AND (c.periods LIKE '%P1%' OR c.periods LIKE '%P2%')\n  AND (c.course_name LIKE '%cybersecurity%' OR c.description LIKE '%cybersecurity%' OR c.learning_outcomes LIKE '%cybersecurity%')\nORDER BY\n  CASE WHEN c.course_name LIKE '%cybersecurity%' THEN 0\n       WHEN c.description LIKE '%cybersecurity%' THEN 1\n       WHEN c.learning_outcomes LIKE '%cybersecurity%' THEN 2\n       ELSE 3 END\n",
+          "total": 12,
+          "result_codes": [
+            "DA2215",
+            "DD2391",
+            "DD2303",
+            "DD2510",
+            "DD2394",
+            "EP2791",
+            "EN2720",
+            "EP284U",
+            "EP279V",
+            "EP275V",
+            "EP274V",
+            "EP283U"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 0,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 5,
+            "precision_at_10": 1.0,
+            "summary_honest": true,
+            "issues": []
+          }
+        }
+      ]
+    },
+    {
+      "case": "power-ratings-demo-label",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "electric power systems courses with the best student ratings",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 6.6,
+          "reply": "Finds courses related to electric power systems, ordered by how relevant the topic is to the course and then by student rating. (28 courses)",
+          "sql": "\nSELECT c.course_code\nFROM courses c\nLEFT JOIN student_ratings r USING (course_code)\nWHERE c.status = 'ok'\n  AND (c.course_name LIKE '%electric power%' OR c.description LIKE '%electric power%' OR c.learning_outcomes LIKE '%electric power%'\n       OR c.course_name LIKE '%power system%' OR c.description LIKE '%power system%' OR c.learning_outcomes LIKE '%power system%'\n       OR c.course_name LIKE '%electrical grid%' OR c.description LIKE '%electrical grid%' OR c.learning_outcomes LIKE '%electrical grid%'\n       OR c.course_name LIKE '%smart grid%' OR c.description LIKE '%smart grid%' OR c.learning_outcomes LIKE '%smart grid%')\nORDER BY\n  CASE\n    WHEN c.course_name LIKE '%electric power%' OR c.course_name LIKE '%power system%' OR c.course_name LIKE '%electrical grid%' OR c.course_name LIKE '%smart grid%' THEN 0\n    WHEN c.description LIKE '%electric power%' OR c.description LIKE '%power system%' OR c.description LIKE '%electrical grid%' OR c.description LIKE '%smart grid%' THEN 1\n    WHEN c.learning_outcomes LIKE '%electric power%' OR c.learning_outcomes LIKE '%power system%' OR c.learning_outcomes LIKE '%electrical grid%' OR c.learning_outcomes LIKE '%smart grid%' THEN 2\n    ELSE 3\n  END,\n  r.rating DESC NULLS LAST;",
+          "total": 28,
+          "result_codes": [
+            "EH2220",
+            "EG2340",
+            "EH2221",
+            "EI2525",
+            "EG2240",
+            "EI2600",
+            "EN2911",
+            "EG2121",
+            "EG2140",
+            "EG2130",
+            "EG2100",
+            "EI2452",
+            "EN2912",
+            "EG2110",
+            "EI2439",
+            "EI2460",
+            "EI2610",
+            "EI2490",
+            "EI2436",
+            "EP2900",
+            "EI2440",
+            "EI2455",
+            "EI2435",
+            "EG2210",
+            "EP2510",
+            "EF2260",
+            "EJ2410",
+            "EG2230"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": false,
+            "violations": {
+              "EP2900": [
+                "off topic"
+              ],
+              "EP2510": [
+                "off topic"
+              ]
+            },
+            "violation_rate": 0.07142857142857142,
+            "missing": [],
+            "required": 0,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 2,
+            "precision_at_10": 0.6,
+            "summary_honest": true,
+            "issues": [
+              "The SQL sorts by where a topic term appears before student rating, so the highest-rated courses are not necessarily first.",
+              "Keyword matching admits courses focused on professional development, entrepreneurship, or wind energy rather than electric power systems."
+            ]
+          }
+        },
+        {
+          "message": "what do students say about the top one?",
+          "expected_route": [
+            "advise"
+          ],
+          "route": "advise",
+          "route_ok": true,
+          "seconds": 3.3,
+          "reply": "The top-rated course from your search is **EH2220 The Sustainable Electric Power Engineer**, with a rating of 4.8 out of 5 (demo data). Students describe it as \"incredibly demanding and pushing you to critically analyze your role as an engineer,\" but also \"by far one of the most rewarding experiences.\" They note it \"requires deep personal reflection and engagement, but the insights gained over the two years are invaluable\" (demo data).",
+          "highlighted": [
+            "EH2220"
+          ],
+          "judge": {
+            "groundedness": 5,
+            "answers_question": 5,
+            "completeness": 5,
+            "clarity": 5,
+            "demo_labels_ok": true,
+            "issues": []
+          }
+        }
+      ]
+    },
+    {
+      "case": "hci-programme",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "human-computer interaction courses in the HCID programme",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 10.9,
+          "reply": "Finds Human-Computer Interaction courses within the HCID programme, ordered by relevance to HCI, interaction design, user experience, and usability keywords. (4 courses)",
+          "sql": "\nSELECT c.course_code\nFROM courses c\nWHERE c.status = 'ok'\n  AND c.programmes LIKE '%HCID%'\n  AND (c.course_name LIKE '%human computer interaction%' OR\n       c.description LIKE '%human computer interaction%' OR\n       c.learning_outcomes LIKE '%human computer interaction%' OR\n       c.course_name LIKE '%interaction design%' OR\n       c.description LIKE '%interaction design%' OR\n       c.learning_outcomes LIKE '%interaction design%' OR\n       c.course_name LIKE '%user experience%' OR\n       c.description LIKE '%user experience%' OR\n       c.learning_outcomes LIKE '%user experience%' OR\n       c.course_name LIKE '%usability%' OR\n       c.description LIKE '%usability%' OR\n       c.learning_outcomes LIKE '%usability%')\nORDER BY CASE WHEN c.course_name LIKE '%human computer interaction%' THEN 0\n              WHEN c.description LIKE '%human computer interaction%' THEN 1\n              WHEN c.learning_outcomes LIKE '%human computer interaction%' THEN 2\n              WHEN c.course_name LIKE '%interaction design%' THEN 3\n              WHEN c.description LIKE '%interaction design%' THEN 4\n              WHEN c.learning_outcomes LIKE '%interaction design%' THEN 5\n              WHEN c.course_name LIKE '%user experience%' THEN 6\n              WHEN c.description LIKE '%user experience%' THEN 7\n              WHEN c.learning_outcomes LIKE '%user experience%' THEN 8\n              WHEN c.course_name LIKE '%usability%' THEN 9\n              WHEN c.description LIKE '%usability%' THEN 10\n              WHEN c.learning_outcomes LIKE '%usability%' THEN 11\n              ELSE 12 END;",
+          "total": 4,
+          "result_codes": [
+            "DH2670",
+            "DH2628",
+            "DH2310",
+            "DH2408"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 0,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 4,
+            "precision_at_10": 0.75,
+            "summary_honest": true,
+            "issues": [
+              "The SQL searches for 'human computer interaction' but not the hyphenated 'human-computer interaction', potentially missing directly relevant courses.",
+              "DH2310 appears focused on extended reality development and computer graphics rather than HCI."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case": "compare-two",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "compare DD2421 and DD2434",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 3.7,
+          "reply": "This query retrieves all details for courses DD2421 (Machine Learning) and DD2434 (Machine Learning, Advanced Course). (2 courses)",
+          "sql": "SELECT * FROM courses WHERE course_code IN ('DD2421', 'DD2434') AND status = 'ok'",
+          "total": 2,
+          "result_codes": [
+            "DD2421",
+            "DD2434"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 2,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 3,
+            "precision_at_10": 1.0,
+            "summary_honest": true,
+            "issues": [
+              "The SQL adds an unrequested status = 'ok' filter, which could exclude a requested course."
+            ]
+          }
+        },
+        {
+          "message": "which one is harder according to students?",
+          "expected_route": [
+            "advise"
+          ],
+          "route": "advise",
+          "route_ok": true,
+          "seconds": 3.3,
+          "reply": "According to student ratings (demo data), DD2434 (Machine Learning, Advanced Course) is significantly harder with a difficulty rating of 5.0, compared to DD2421 (Machine Learning) which has a difficulty rating of 3.0. Reviews for DD2434 describe it as \"incredibly challenging\" and pushing understanding, while DD2421's review suggests it \"lacked the depth expected for a master's level course\" and felt introductory.",
+          "highlighted": [
+            "DD2434"
+          ],
+          "judge": {
+            "groundedness": 5,
+            "answers_question": 5,
+            "completeness": 5,
+            "clarity": 5,
+            "demo_labels_ok": true,
+            "issues": []
+          }
+        }
+      ]
+    },
+    {
+      "case": "perfect-pass-rate",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "courses where everyone passes, 100% pass rate",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 3.3,
+          "reply": "Finds courses with a 100% pass rate based on student ratings. (55 courses)",
+          "sql": "SELECT c.course_code FROM courses c JOIN student_ratings r ON c.course_code = r.course_code WHERE r.pass_rate = 1.0 AND c.status = 'ok'",
+          "total": 55,
+          "result_codes": [
+            "DD2350",
+            "EF2264",
+            "EH2781",
+            "EI2460",
+            "EL2850",
+            "EP2300",
+            "EQ2700",
+            "IH2652",
+            "IK2520",
+            "IS2500",
+            "DM2601",
+            "DM2679",
+            "DM2713",
+            "DH2632",
+            "DH2408",
+            "DM2730",
+            "DD2258",
+            "DD2480",
+            "DH2310",
+            "DH2321",
+            "DH2400",
+            "DH2642",
+            "DH2650",
+            "DH2670",
+            "DM2585",
+            "DM2586",
+            "DM2720",
+            "DT2212",
+            "DT2213",
+            "DT2300",
+            "DD2470",
+            "DM2904",
+            "DM2905",
+            "DT2151",
+            "DT2215",
+            "MF2104",
+            "DM1999",
+            "DT2112",
+            "DT2119",
+            "LS1464",
+            "DD2257",
+            "DD2380",
+            "DH2413",
+            "DH2643",
+            "DH2655",
+            "DM2583",
+            "DM2800",
+            "DT2470",
+            "DM2602",
+            "DD2364",
+            "DT2216",
+            "IL2206",
+            "LS2442",
+            "ME2072",
+            "MF2039"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 0,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 3,
+            "precision_at_10": 1.0,
+            "summary_honest": true,
+            "issues": [
+              "The unrequested c.status = 'ok' filter excludes courses that may also have a 100% pass rate."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case": "space-physics",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "space physics courses",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 5.1,
+          "reply": "This query finds courses related to space physics, including those mentioning plasma, ordered by relevance of the topic in the course name, description, and learning outcomes. (15 courses)",
+          "sql": "\nSELECT c.course_code\nFROM courses c\nWHERE c.status = 'ok'\n  AND (c.course_name LIKE '%space physics%' OR\n       c.description LIKE '%space physics%' OR\n       c.learning_outcomes LIKE '%space physics%' OR\n       c.course_name LIKE '%plasma%' OR\n       c.description LIKE '%plasma%' OR\n       c.learning_outcomes LIKE '%plasma%')\nORDER BY CASE WHEN c.course_name LIKE '%space physics%' THEN 0\n              WHEN c.description LIKE '%space physics%' THEN 1\n              WHEN c.learning_outcomes LIKE '%space physics%' THEN 2\n              WHEN c.course_name LIKE '%plasma%' THEN 3\n              WHEN c.description LIKE '%plasma%' THEN 4\n              WHEN c.learning_outcomes LIKE '%plasma%' THEN 5\n              ELSE 6 END;",
+          "total": 15,
+          "result_codes": [
+            "EF2240",
+            "EF2245",
+            "EF2225",
+            "EF2200",
+            "EF2226",
+            "EF2230",
+            "EF2250",
+            "EF2215",
+            "EF2270",
+            "EF2260",
+            "EI2440",
+            "EI2433",
+            "EF2221",
+            "EF2222",
+            "EF2243"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 2,
+            "count_problems": []
+          },
+          "judge": {
+            "sql_faithfulness": 5,
+            "precision_at_10": 0.8,
+            "summary_honest": true,
+            "issues": [
+              "The broad plasma match includes EF2226, a general plasma project with no evident space focus, and EF2270, which focuses on industrial plasma applications."
+            ]
+          }
+        },
+        {
+          "message": "any of them without a written exam?",
+          "expected_route": [
+            "refine",
+            "advise"
+          ],
+          "route": "refine",
+          "route_ok": true,
+          "seconds": 4.3,
+          "reply": "Finds courses related to space physics or plasma that do not have a written exam. (10 courses)",
+          "sql": "SELECT c.course_code\nFROM courses c\nWHERE c.status = 'ok'\n  AND (c.course_name LIKE '%space physics%' OR\n       c.description LIKE '%space physics%' OR\n       c.learning_outcomes LIKE '%space physics%' OR\n       c.course_name LIKE '%plasma%' OR\n       c.description LIKE '%plasma%' OR\n       c.learning_outcomes LIKE '%plasma%')\n  AND c.has_written_exam = 0\nORDER BY CASE WHEN c.course_name LIKE '%space physics%' THEN 0\n              WHEN c.description LIKE '%space physics%' THEN 1\n              WHEN c.learning_outcomes LIKE '%space physics%' THEN 2\n              WHEN c.course_name LIKE '%plasma%' THEN 3\n              WHEN c.description LIKE '%plasma%' THEN 4\n              WHEN c.learning_outcomes LIKE '%plasma%' THEN 5\n              ELSE 6 END;",
+          "total": 10,
+          "result_codes": [
+            "EF2245",
+            "EF2225",
+            "EF2226",
+            "EF2250",
+            "EF2215",
+            "EF2260",
+            "EI2433",
+            "EF2221",
+            "EF2222",
+            "EF2243"
+          ],
+          "retrieval_steps": 2,
+          "judge": {
+            "sql_faithfulness": 5,
+            "precision_at_10": 0.7,
+            "summary_honest": true,
+            "issues": [
+              "EI2433, EF2221, and EF2222 appear only tangentially related or unrelated to the space-physics/plasma topic."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "case": "greeting",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "hi there!",
+          "expected_route": [
+            "reply"
+          ],
+          "route": "reply",
+          "route_ok": true,
+          "seconds": 1.2,
+          "reply": "Hello! How can I help you find courses today?"
+        }
+      ]
+    },
+    {
+      "case": "too-vague",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "I want something good",
+          "expected_route": [
+            "reply"
+          ],
+          "route": "reply",
+          "route_ok": true,
+          "seconds": 0.9,
+          "reply": "What kind of courses are you interested in? For example, do you have a specific subject, difficulty level, or type of examination in mind?"
+        }
+      ]
+    },
+    {
+      "case": "off-topic",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "what's the weather in Stockholm today?",
+          "expected_route": [
+            "reply"
+          ],
+          "route": "reply",
+          "route_ok": true,
+          "seconds": 1.0,
+          "reply": "I can only help with KTH master's courses. I cannot provide weather information."
+        }
+      ]
+    }
+  ]
+}

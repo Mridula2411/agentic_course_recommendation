@@ -62,7 +62,7 @@
 .courseCardHeader {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   /* border: 2px solid green; */
 }
 
@@ -101,3 +101,87 @@
   font-style: normal;
 }
 
+
+
+.hero {
+  margin-bottom: 24px;
+}
+
+.chatLog {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 900px;
+  margin: 0 auto 24px auto;
+  text-align: start;
+}
+
+.chatMessage {
+  max-width: 80%;
+  padding: 10px 16px;
+  border-radius: 15px;
+}
+
+.chatMessage p {
+  margin: 4px 0;
+}
+
+.chatMessage.student {
+  align-self: flex-end;
+  background-color: #2f4858;
+  color: #e9e9e9;
+}
+
+.chatMessage.advisor {
+  align-self: flex-start;
+  background-color: #e9e9e9;
+  color: #213547;
+}
+
+.chatMessage.thinking {
+  font-style: italic;
+  color: #747b6e;
+}
+
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.exampleChip {
+  background-color: #e9e9e9;
+  color: #2f4858;
+  border-radius: 20px;
+}
+
+.newChatButton {
+  background-color: transparent;
+  color: #2f4858;
+  text-decoration: underline;
+}
+
+.errorText {
+  color: #b42318;
+}
+
+.sectionHeading {
+  text-align: start;
+  color: #2f4858;
+  margin: 5vh 0 0 5%;
+}
+
+.courseCardParent {
+  margin-top: 2vh;
+}
+
+@media (max-width: 800px) {
+  .courseCardParent {
+    grid-template-columns: 100%;
+  }
+
+  .chatMessage {
+    max-width: 95%;
+  }
+}

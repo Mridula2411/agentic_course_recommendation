@@ -1,0 +1,213 @@
+{
+  "meta": {
+    "started": "2026-09-26 13:39",
+    "model": "gemini-2.5-flash",
+    "judge_model": null,
+    "repeat": 1
+  },
+  "summary": {
+    "turns": 4,
+    "errors": 0,
+    "routing_accuracy": 1,
+    "constraint_pass_rate": 1,
+    "courses_violating_constraints": 0.0,
+    "sql_faithfulness": null,
+    "precision_at_10": null,
+    "summary_honest": null,
+    "advice_groundedness": null,
+    "advice_answers_question": null,
+    "demo_labels_ok": null,
+    "seconds_per_turn": 4.38,
+    "must_include_recall": 1.0,
+    "result_consistency": null
+  },
+  "runs": [
+    {
+      "case": "ml-refine-advise",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "machine learning courses",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 4.9,
+          "reply": "Finds courses related to machine learning, prioritizing matches in the course name, then description, and then learning outcomes. (37 courses)",
+          "sql": "\nSELECT c.course_code\nFROM courses c\nWHERE c.status = 'ok'\n  AND (c.course_name LIKE '%machine learning%' OR c.description LIKE '%machine learning%' OR c.learning_outcomes LIKE '%machine learning%'\n       OR c.course_name LIKE '% ML %' OR c.description LIKE '% ML %' OR c.learning_outcomes LIKE '% ML %')\nORDER BY\n  CASE\n    WHEN c.course_name LIKE '%machine learning%' THEN 0\n    WHEN c.course_name LIKE '% ML %' THEN 1\n    WHEN c.description LIKE '%machine learning%' THEN 2\n    WHEN c.description LIKE '% ML %' THEN 3\n    WHEN c.learning_outcomes LIKE '%machine learning%' THEN 4\n    WHEN c.learning_outcomes LIKE '% ML %' THEN 5\n    ELSE 6\n  END;",
+          "total": 37,
+          "result_codes": [
+            "DD2301",
+            "DD2421",
+            "DD2570",
+            "DD2434",
+            "EG2140",
+            "EL2810",
+            "EP236U",
+            "EP234U",
+            "EQ2341",
+            "EQ2415",
+            "ID2223",
+            "IK2221",
+            "ID2214",
+            "DT2112",
+            "DM2583",
+            "DT2470",
+            "DD2363",
+            "DD2430",
+            "DD2420",
+            "DD2601",
+            "DD2447",
+            "DD2368",
+            "DD2367",
+            "EP272V",
+            "EP2900",
+            "EP271V",
+            "EQ2310",
+            "ID2222",
+            "ID2221",
+            "ID2211",
+            "IK2220",
+            "IK2227",
+            "IL2230",
+            "DD2360",
+            "DD2417",
+            "DD2603",
+            "EP2700"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 2,
+            "count_problems": []
+          }
+        },
+        {
+          "message": "only the ones in P2",
+          "expected_route": [
+            "refine"
+          ],
+          "route": "refine",
+          "route_ok": true,
+          "seconds": 4.7,
+          "reply": "Finds machine learning courses offered in period P2. (13 courses)",
+          "sql": "\nSELECT c.course_code\nFROM courses c\nWHERE c.status = 'ok'\n  AND (c.course_name LIKE '%machine learning%' OR c.description LIKE '%machine learning%' OR c.learning_outcomes LIKE '%machine learning%'\n       OR c.course_name LIKE '% ML %' OR c.description LIKE '% ML %' OR c.learning_outcomes LIKE '% ML %')\n  AND c.periods LIKE '%P2%'\nORDER BY\n  CASE\n    WHEN c.course_name LIKE '%machine learning%' THEN 0\n    WHEN c.course_name LIKE '% ML %' THEN 1\n    WHEN c.description LIKE '%machine learning%' THEN 2\n    WHEN c.description LIKE '% ML %' THEN 3\n    WHEN c.learning_outcomes LIKE '%machine learning%' THEN 4\n    WHEN c.learning_outcomes LIKE '% ML %' THEN 5\n    ELSE 6\n  END;\n",
+          "total": 13,
+          "result_codes": [
+            "DD2301",
+            "DD2570",
+            "DD2434",
+            "EG2140",
+            "ID2223",
+            "ID2214",
+            "DD2430",
+            "DD2368",
+            "EP272V",
+            "EQ2310",
+            "ID2222",
+            "DD2360",
+            "DD2603"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 0,
+            "count_problems": []
+          }
+        },
+        {
+          "message": "which of these is the easiest?",
+          "expected_route": [
+            "advise"
+          ],
+          "route": "advise",
+          "route_ok": true,
+          "seconds": 3.4,
+          "reply": "Based on the difficulty ratings, DD2430 Project Course in Data Science and DD2368 Quantum Neural Networks are the easiest, both rated 2.0 (demo data). DD2430 has a high pass rate of 93.5% (demo data) and DD2368 has a pass rate of 91.6% (demo data).",
+          "highlighted": [
+            "DD2430",
+            "DD2368"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "projects-no-exam-p1",
+      "repeat": 0,
+      "turns": [
+        {
+          "message": "project-based courses with no written exam in period 1",
+          "expected_route": [
+            "search"
+          ],
+          "route": "search",
+          "route_ok": true,
+          "seconds": 4.5,
+          "reply": "Finds project-based courses offered in Period 1 that do not have a written exam. (42 courses)",
+          "sql": "SELECT c.course_code FROM courses c WHERE c.status = 'ok' AND c.periods LIKE '%P1%' AND c.examination LIKE '%PRO%' AND c.examination NOT LIKE '%TEN%' AND c.examination NOT LIKE '%exam%' ORDER BY CASE WHEN c.examination LIKE '%PROA%' THEN 0 WHEN c.examination LIKE '%PRO%' THEN 1 ELSE 2 END, c.course_code",
+          "total": 42,
+          "result_codes": [
+            "EI2455",
+            "EJ2201",
+            "EN2720",
+            "EP274V",
+            "DD2367",
+            "DD2394",
+            "DD2411",
+            "DD2414",
+            "DD2430",
+            "DD2467",
+            "DD2600",
+            "DD2610",
+            "DH2400",
+            "DH2413",
+            "DH2465",
+            "DH2643",
+            "DH2655",
+            "DM2583",
+            "DM2630",
+            "DM2803",
+            "DT2470",
+            "EF2226",
+            "EF2227",
+            "EF2228",
+            "EF2229",
+            "EH2070",
+            "EI2510",
+            "EI2515",
+            "EI2525",
+            "EK2210",
+            "EP283U",
+            "EQ2443",
+            "EQ2444",
+            "EQ2445",
+            "EQ2801",
+            "IH262V",
+            "IH2662",
+            "II2211",
+            "IK2200",
+            "IL2231",
+            "IL2232",
+            "MF2039"
+          ],
+          "retrieval_steps": 2,
+          "checks": {
+            "passed": true,
+            "violations": {},
+            "violation_rate": 0.0,
+            "missing": [],
+            "required": 0,
+            "count_problems": []
+          }
+        }
+      ]
+    }
+  ]
+}

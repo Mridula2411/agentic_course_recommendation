@@ -1,0 +1,41 @@
+.searchDetails {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.searchDetails summary {
+  cursor: pointer;
+  color: #2f4858;
+}
+
+.searchDetails ol {
+  padding-left: 20px;
+}
+
+.searchDetails pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 4px 0 8px 0;
+  font-size: 12px;
+}
+
+.stepTool {
+  font-weight: 600;
+}
+
+.stepError {
+  color: #b42318;
+}
+
+.factCheck {
+  font-size: 13px;
+  color: #5b6b75;
+  margin: 8px 0 0 0;
+}
+
+.factCheck ul {
+  padding-left: 20px;
+}
